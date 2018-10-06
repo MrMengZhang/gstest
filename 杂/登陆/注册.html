@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-widtn,initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>注册</title>
+		<style type="text/css">
+			ul,li,body,p,input,span{
+				margin: 0;
+				padding: 0;
+			}
+			li{
+				list-style: none;
+			}
+			#widtn_box{
+				width: 100%;
+				min-width: 320px;
+				overflow: hidden;
+				max-width: 640px;
+				color:  rgba(255,255,255,0.8);
+				margin: 0 auto; 
+				background: url(img/bg.png) no-repeat;
+				background-size:100% 100%; 
+				background-attachment: fixed;
+			}
+			.header{
+				font-size: 0.34rem;
+				color: white;
+				line-height: 1.7rem;
+				text-align: center;
+			}
+			.header a img{
+				width: 0.15rem;
+				float: left;
+				margin-top: 0.71rem;
+				margin-left: 0.26rem;
+			}
+			input{
+				border: none;
+				line-height: 0.86rem;
+				height: 0.86rem;
+				display: block;
+				width: 100%;
+				font-size: 0.28rem;
+				color:  rgba(255,255,255,0.8);
+				background: none;
+				outline:none;
+			}
+			input::-webkit-input-placeholder{
+				color: rgba(255,255,255,0.6);
+			}
+			.inp{
+				margin: 0 auto;
+				height: 0.86rem;
+				margin-bottom: 0.24rem;
+				width: 5.7rem;
+				border-bottom: 1px solid  rgba(255,255,255,0.8);
+			}
+			.pcs select{
+				display: block;
+				float: left;
+				width: 33.33%;
+				text-align: center;
+				border: none;
+				line-height: 0.86rem;
+				color: rgba(255,255,255,0.6);
+				height: 0.86rem;
+				font-size: 0.28rem;
+			}
+			.submit_btn input{
+				background: #56B3F6;
+				width: 5.7rem;
+				font-size: 0.28rem;
+				margin: 0 auto;
+				border-radius: 0.1rem;
+			}
+			select {
+				border: solid 1px #000;
+				outline:none;
+				appearance:none;
+				color: #FFFFFF;
+				text-align: center;
+    			text-align-last: center;
+				-moz-appearance:none;
+				-webkit-appearance:none;
+				
+				/*在选择框的最右侧中间显示小箭头图片*/
+				/*background: url("http://ourjs.github.io/static/2015/arrow.png") no-repeat scroll right center transparent;*/
+				
+				
+				/*为下拉小箭头留出一点位置，避免被文字覆盖*/
+				/*padding-right: 14px;*/
+			}
+			
+			
+			/*清除ie的默认选择框样式清除，隐藏下拉箭头*/
+			select::-ms-expand { display: none; }
+						
+		</style>
+	</head>
+	<body>
+		<div id="widtn_box">
+			<form name="frm" action="__APP__/Register/checkRegister" method="post" onsubmit="return checkzc()">
+			<header class="header">
+			<a href="__APP__/Login/login"><img src="img/back.png" alt="" /></a>
+				注册
+			</header>
+		
+				<div class="inp">
+					<input type="text" name="user_name" id="user" value="" placeholder="请输入手机号" />
+				</div>
+				<div class="inp">
+					<input type="password" name="user_pwd1" id="user1" value="" placeholder="请输入用户密码" />
+				</div>
+				<div class="inp">
+					<input type="password" name="user_pwd2" id="user2" value="" placeholder="请再次输入密码" />
+				</div>
+				<div class="inp pcs">
+					<select name="province" id="province" style="background:none;color:#caeeff" onchange="showCity(this.value,1)">
+						<option value="">-请选择省-</option>
+						<foreach name="area0" item="v">
+							<option value="{$v.area_id}">{$v.area_name}</option>
+						</foreach>
+					</select>
+					<select name="city" id="city" onchange="showCity(this.value,2)" style="background:none;color:#caeeff">
+						<option value="">-请选择市-</option>
+					</select>
+					<select name="school" id="school" style="background:none;color:#caeeff">
+						<option value="">-请选择学校-</option>
+					</select>
+				</div>
+			
+				<div class="inp">
+					<input type="text" name="ji" value="" placeholder="请输入班级"/>
+				</div>
+				<div class="inp">
+					<input type="text" name="xi" value="" placeholder="请输入系名" />
+				</div>
+				<div class="inp">
+					<input type="text" name="zhuanye" value="" placeholder="请输入专业" />
+				</div>
+				<!-- <div class="inp">
+					<img src="__ROOT__/public/img/id.png" alt="" />
+					<label for="user">证件号:</label><input type="text" name="idcard" value="" placeholder="请输入身份证号" />
+					<span></span>
+					<div class="clearfix"></div>
+				</div> -->
+				<!--<div class="yzm">-->
+					<!--<label for="user">验证码:</label><input style="width: 20%;" type="text" name="" id="user" value="" placeholder="请输入验证码" />-->
+					<!--<span id="hqyzm">获取验证码</span>-->
+					<!--<div class="clearfix"></div>-->
+				<!--</div>-->
+				
+				<span id="" class="submit_btn">
+					<input type="submit" value="注册"/>
+				</span>
+			</form>
+		</div>
+		
+    <script type="text/javascript">
+    	document.getElementById("widtn_box").style.height=(document.documentElement.clientHeight || document.body.clientHeight)+'px';
+    	!(function(doc, win) {
+    var docEle = doc.documentElement,
+        evt = "onorientationchange" in window ? "orientationchange" : "resize",
+        fn = function() {
+            var width = docEle.clientWidth;
+            width = width < 320 ? 320 : width;
+            width = width > 640 ? 640 : width;
+            width && (docEle.style.fontSize = 100 * (width / 640) + "px");
+        };
+     
+    win.addEventListener(evt, fn, false);
+    doc.addEventListener("DOMContentLoaded", fn, false);
+
+}(document, window));
+    </script>
+	</body>
+</html>
